@@ -1,0 +1,208 @@
+{
+  "project": {
+    "name": "Laser Hands (rough)",
+    "id": "__5740nd",
+    "creationTs": 1686288323314,
+    "lastModifiedTs": 1775162459109,
+    "userSetData": {
+      "description": "Generate laser rays from users' hands from a webcam stream.",
+      "tags": [
+        "vision"
+      ],
+      "contactURL": "",
+      "tutorialYouTube": ""
+    }
+  },
+  "graph": {
+    "nodes": [
+      {
+        "id": "image_mixer_l85a0i",
+        "displayLabel": "final",
+        "nodeSpecId": "image_mixer",
+        "customData": {
+          "previewX": 1216,
+          "previewY": 320,
+          "previewWidth": 496,
+          "previewHeight": 288
+        },
+        "uiData": {
+          "posX": 1888,
+          "posY": 544,
+          "width": 224,
+          "height": 254,
+          "selected": false
+        },
+        "propValues": {
+          "mode": "source-over",
+          "hidePreview": false
+        },
+        "inputValues": {
+          "topText": "",
+          "midText": "",
+          "bottomText": ""
+        },
+        "incomingEdges": {
+          "image1": [
+            {
+              "sourceNodeId": "live_camera_qeic0l",
+              "outputId": "image"
+            }
+          ],
+          "image2": [
+            {
+              "sourceNodeId": "shader_processing_xlkw9g",
+              "outputId": "image"
+            }
+          ]
+        }
+      },
+      {
+        "id": "live_camera_qeic0l",
+        "nodeSpecId": "live_camera",
+        "customData": {
+          "runContinuously": true,
+          "initialWidth": 240,
+          "initialHeight": 320,
+          "previewX": 320,
+          "previewY": 64,
+          "previewWidth": 240,
+          "previewHeight": 320
+        },
+        "uiData": {
+          "posX": 560,
+          "posY": 560,
+          "width": 176,
+          "height": 105,
+          "selected": false
+        },
+        "propValues": {
+          "hidePreview": false
+        }
+      },
+      {
+        "id": "code_editor_ji3umz",
+        "displayLabel": "fx",
+        "nodeSpecId": "code_editor",
+        "customData": {
+          "initialWidth": 304,
+          "initialHeight": 368,
+          "previewX": 576,
+          "previewY": 32,
+          "previewWidth": 704,
+          "previewHeight": 352
+        },
+        "uiData": {
+          "posX": 1104,
+          "posY": 128,
+          "width": 176,
+          "height": 105,
+          "selected": true
+        },
+        "propValues": {
+          "curCode": "void mainImage( out vec4 fragColor, in vec2 fragCoord )\n{\n    vec2 uv = fragCoord.xy / iResolution.xy;\n    fragColor = vec4(0.0);\n\n    // 1. Calculate the Center and Motion of the Points\n    vec2 center = vec2(0.0);\n    float count = 0.0;\n    float motionDetected = 0.0;\n    vec2 minP = vec2(1.0);\n    vec2 maxP = vec2(0.0);\n\n    // We sample a grid to find the green landmarks\n    for (float x = 0.05; x < 0.95; x += 0.07) {\n        for (float y = 0.05; y < 0.95; y += 0.07) {\n            vec2 samplePos = vec2(x, y);\n            vec4 col = texture(iChannel0, samplePos);\n            \n            if (col.g > 0.4) { \n                center += samplePos;\n                minP = min(minP, samplePos);\n                maxP = max(maxP, samplePos);\n                count++;\n                \n                // Motion Check: Compare current pixel with a slightly offset \"time\" or \"space\"\n                // In this environment, we simulate motion detection by checking if the \n                // landmark boundaries are changing rapidly or if there's variance in the texture.\n                vec4 prevCol = texture(iChannel0, samplePos + vec2(sin(iTime)*0.01));\n                motionDetected += abs(col.g - prevCol.g);\n            }\n        }\n    }\n\n    if (count == 0.0) return;\n\n    center /= count;\n    \n    // Smooth out the motion variable to prevent instant flickering\n    float motionFactor = smoothstep(0.01, 0.15, motionDetected / count);\n    \n    // 2. Define the Ellipse shape\n    vec2 size = (maxP - minP) * 1.8; \n    size = max(size, vec2(0.3, 0.4)); \n    \n    vec2 aspect = vec2(iResolution.x / iResolution.y, 1.0);\n    vec2 p = (uv - center) * aspect;\n    vec2 s = size * aspect;\n\n    // 3. Ellipse Formula with \"Laser Distortion\"\n    float waveOffset = sin(uv.y * 20.0 + iTime * 10.0) * 0.02;\n    float ellipseDist = length((p + vec2(waveOffset, 0.0)) / s);\n\n    // 4. Draw the \"Red Laser\" Line\n    float thickness = 0.06; \n    float halo = smoothstep(1.0 + thickness, 1.0, ellipseDist) * smoothstep(1.0 - thickness, 1.0, ellipseDist);\n\n    // Only render if we have a halo AND motion is detected\n    if (halo > 0.0 && motionFactor > 0.1) {\n        float angle = atan(p.y, p.x);\n        float streaming = step(0.1, sin(angle * 10.0 - iTime * 15.0));\n        \n        vec3 laserRed = vec3(1.0, 0.0, 0.0);\n        vec3 finalColor = mix(laserRed, vec3(1.0, 0.9, 0.9), pow(halo, 2.0));\n        \n        // Multiply the alpha by motionFactor so it fades in/out with movement\n        float finalAlpha = halo * (0.5 + 0.5 * streaming) * motionFactor;\n        \n        // High intensity flicker\n        finalAlpha *= (0.8 + 0.2 * sin(iTime * 20.0));\n        \n        fragColor = vec4(finalColor * finalAlpha, finalAlpha);\n    }\n}",
+          "hidePreview": false
+        },
+        "inputValues": {
+          "initialCode": ""
+        }
+      },
+      {
+        "id": "landmark_visualizer_72jof4",
+        "nodeSpecId": "landmark_visualizer",
+        "customData": {
+          "previewX": 1296,
+          "previewY": 32,
+          "previewWidth": 320,
+          "previewHeight": 240
+        },
+        "uiData": {
+          "posX": 1104,
+          "posY": 272,
+          "width": 176,
+          "height": 205,
+          "selected": false
+        },
+        "propValues": {
+          "keypointScale": 3,
+          "color": "#5afe08",
+          "boundingBox": false,
+          "hidePreview": false
+        },
+        "incomingEdges": {
+          "landmarkResult": [
+            {
+              "sourceNodeId": "face_detection_gv5nke",
+              "outputId": "landmarkResult"
+            }
+          ]
+        }
+      },
+      {
+        "id": "shader_processing_xlkw9g",
+        "displayLabel": "red up",
+        "nodeSpecId": "shader_processing",
+        "customData": {
+          "initialWidth": 240,
+          "initialHeight": 320,
+          "runContinuously": true,
+          "previewX": 1632,
+          "previewY": 32,
+          "previewWidth": 240,
+          "previewHeight": 320
+        },
+        "uiData": {
+          "posX": 1520,
+          "posY": 272,
+          "width": 208,
+          "height": 229,
+          "selected": false
+        },
+        "propValues": {
+          "hidePreview": false
+        },
+        "inputValues": {
+          "shader": "vfx-mirror"
+        },
+        "incomingEdges": {
+          "shader": [
+            {
+              "sourceNodeId": "code_editor_ji3umz",
+              "outputId": "code"
+            }
+          ],
+          "channel0": [
+            {
+              "sourceNodeId": "landmark_visualizer_72jof4",
+              "outputId": "image"
+            }
+          ]
+        }
+      },
+      {
+        "id": "face_detection_gv5nke",
+        "nodeSpecId": "face_detection",
+        "customData": {
+          "previewX": 16,
+          "previewY": 400,
+          "previewWidth": 320,
+          "previewHeight": 240
+        },
+        "uiData": {
+          "posX": 784,
+          "posY": 160,
+          "width": 176,
+          "height": 94,
+          "selected": false
+        },
+        "incomingEdges": {
+          "image": [
+            {
+              "sourceNodeId": "live_camera_qeic0l",
+              "outputId": "image"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
