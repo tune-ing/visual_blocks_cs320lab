@@ -1,0 +1,557 @@
+{
+  "project": {
+    "id": "jdwpd6",
+    "name": "Visual Blocks Augmented Reality Lab S26",
+    "creationTs": 1774900856218,
+    "lastModifiedTs": 1775160631700
+  },
+  "graph": {
+    "nodes": [
+      {
+        "id": "body_segmentation_ahvtpc",
+        "nodeSpecId": "body_segmentation",
+        "customData": {
+          "previewX": 480,
+          "previewY": 16,
+          "previewWidth": 320,
+          "previewHeight": 240
+        },
+        "uiData": {
+          "posX": 219.27476355579782,
+          "posY": 232.274949715175,
+          "width": 185.29345703125,
+          "height": 105,
+          "selected": false
+        },
+        "propValues": {
+          "modelOption": "MediaPipeSelfieSegmentation"
+        },
+        "incomingEdges": {
+          "image": [
+            {
+              "sourceNodeId": "live_camera_kwpa5i",
+              "outputId": "image"
+            }
+          ]
+        }
+      },
+      {
+        "id": "live_camera_kwpa5i",
+        "nodeSpecId": "live_camera",
+        "customData": {
+          "runContinuously": true,
+          "initialWidth": 240,
+          "initialHeight": 320,
+          "previewX": 816,
+          "previewY": 272,
+          "previewWidth": 240,
+          "previewHeight": 320
+        },
+        "uiData": {
+          "posX": -80.5261135267097,
+          "posY": 238.0621881285603,
+          "width": 176,
+          "height": 105,
+          "selected": false
+        },
+        "propValues": {
+          "hidePreview": false
+        }
+      },
+      {
+        "id": "landmark_visualizer_exq4ie",
+        "nodeSpecId": "landmark_visualizer",
+        "customData": {
+          "previewX": 16,
+          "previewY": 16,
+          "previewWidth": 320,
+          "previewHeight": 240
+        },
+        "uiData": {
+          "posX": 1095.1593660629549,
+          "posY": 69.38164352514784,
+          "width": 189.603515625,
+          "height": 205,
+          "selected": false
+        },
+        "propValues": {
+          "keypointScale": 1,
+          "color": "#08f7fe",
+          "boundingBox": false,
+          "hidePreview": false
+        },
+        "incomingEdges": {
+          "landmarkResult": [
+            {
+              "sourceNodeId": "face_landmark_2s9qho",
+              "outputId": "landmarkResult"
+            }
+          ]
+        }
+      },
+      {
+        "id": "mask_visualizer_mtivc2",
+        "nodeSpecId": "mask_visualizer",
+        "customData": {
+          "previewX": 544,
+          "previewY": 16,
+          "previewWidth": 320,
+          "previewHeight": 240
+        },
+        "uiData": {
+          "posX": 505.6878805519745,
+          "posY": 253.4087585566835,
+          "width": 176,
+          "height": 179,
+          "selected": false
+        },
+        "propValues": {
+          "mode": "fg-image",
+          "hidePreview": false
+        },
+        "inputValues": {
+          "color": "#22e8dd"
+        },
+        "incomingEdges": {
+          "image": [
+            {
+              "sourceNodeId": "image_processor_ggqncr",
+              "outputId": "image"
+            }
+          ],
+          "segmentationResult": [
+            {
+              "sourceNodeId": "body_segmentation_ahvtpc",
+              "outputId": "segmentationResult"
+            }
+          ]
+        }
+      },
+      {
+        "id": "input_image_w425gv",
+        "nodeSpecId": "input_image",
+        "customData": {
+          "initialWidth": 448,
+          "initialHeight": 240,
+          "previewX": 16,
+          "previewY": 272,
+          "previewWidth": 448,
+          "previewHeight": 240
+        },
+        "uiData": {
+          "posX": 783.6801385288235,
+          "posY": 430.22508614219123,
+          "width": 176,
+          "height": 180,
+          "selected": false
+        },
+        "propValues": {
+          "urls": [
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic1.jpg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic2.jpeg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic3.jpg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic4.jpeg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic5.jpg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic6.jpg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic7.jpeg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic8.jpg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic9.jpg"
+          ],
+          "gridColumnCount": 3,
+          "allowUserUpload": false,
+          "selectedImageUrl": "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic7.jpeg",
+          "hidePreview": false
+        }
+      },
+      {
+        "id": "face_landmark_2s9qho",
+        "nodeSpecId": "face_landmark",
+        "customData": {
+          "previewX": 880,
+          "previewY": 16,
+          "previewWidth": 320,
+          "previewHeight": 240
+        },
+        "uiData": {
+          "posX": 789.1077926136105,
+          "posY": 153.98036140707123,
+          "width": 176,
+          "height": 143,
+          "selected": false
+        },
+        "inputValues": {
+          "staticImage": false
+        }
+      },
+      {
+        "id": "input_image_9554de",
+        "nodeSpecId": "input_image",
+        "customData": {
+          "initialWidth": 448,
+          "initialHeight": 240,
+          "previewX": 352,
+          "previewY": 528,
+          "previewWidth": 448,
+          "previewHeight": 240
+        },
+        "uiData": {
+          "posX": 797.6560483940867,
+          "posY": 689.7780959300065,
+          "width": 176,
+          "height": 180,
+          "selected": false
+        },
+        "propValues": {
+          "urls": [
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic1.jpg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic2.jpeg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic3.jpg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic4.jpeg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic5.jpg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic6.jpg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic7.jpeg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic8.jpg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic9.jpg"
+          ],
+          "gridColumnCount": 3,
+          "allowUserUpload": false,
+          "selectedImageUrl": "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic7.jpeg",
+          "hidePreview": false
+        }
+      },
+      {
+        "id": "shader_processing_i6cqgj",
+        "nodeSpecId": "shader_processing",
+        "customData": {
+          "initialWidth": 240,
+          "initialHeight": 320,
+          "runContinuously": true,
+          "previewX": 816,
+          "previewY": 608,
+          "previewWidth": 240,
+          "previewHeight": 320
+        },
+        "uiData": {
+          "posX": 1129.0853068872314,
+          "posY": 650.678335281464,
+          "width": 208,
+          "height": 229,
+          "selected": false
+        },
+        "propValues": {
+          "hidePreview": false
+        },
+        "inputValues": {
+          "shader": "vfx-mirror"
+        },
+        "incomingEdges": {
+          "shader": [
+            {
+              "sourceNodeId": "code_editor_5s7w7k",
+              "outputId": "code"
+            }
+          ],
+          "channel0": [
+            {
+              "sourceNodeId": "input_image_9554de",
+              "outputId": "image"
+            }
+          ]
+        }
+      },
+      {
+        "id": "live_camera_ehkln7",
+        "nodeSpecId": "live_camera",
+        "customData": {
+          "runContinuously": true,
+          "initialWidth": 240,
+          "initialHeight": 320,
+          "previewX": 16,
+          "previewY": 784,
+          "previewWidth": 240,
+          "previewHeight": 320
+        },
+        "uiData": {
+          "posX": -83.24553028056641,
+          "posY": 368.89082225866036,
+          "width": 176,
+          "height": 105,
+          "selected": false
+        },
+        "propValues": {
+          "hidePreview": false
+        }
+      },
+      {
+        "id": "code_editor_5s7w7k",
+        "nodeSpecId": "code_editor",
+        "customData": {
+          "initialWidth": 304,
+          "initialHeight": 368,
+          "previewX": 272,
+          "previewY": 784,
+          "previewWidth": 304,
+          "previewHeight": 368
+        },
+        "uiData": {
+          "posX": 465.6428422585918,
+          "posY": 690.4625476726337,
+          "width": 176,
+          "height": 105,
+          "selected": false
+        },
+        "propValues": {
+          "curCode": "//\n// Description : Array and textureless GLSL 2D simplex noise function.\n//      Author : Ian McEwan, Ashima Arts.\n//  Maintainer : stegu\n//     Lastmod : 20110822 (ijm)\n//     License : Copyright (C) 2011 Ashima Arts. All rights reserved.\n//               Distributed under the MIT License. See LICENSE file.\n//               https://github.com/ashima/webgl-noise\n//               https://github.com/stegu/webgl-noise\n// \nvec3 mod289(vec3 x) {\n  return x - floor(x * (1.0 / 289.0)) * 289.0;\n}\n\nvec2 mod289(vec2 x) {\n  return x - floor(x * (1.0 / 289.0)) * 289.0;\n}\n\nvec3 permute(vec3 x) {\n  return mod289(((x*34.0)+1.0)*x);\n}\n\nfloat snoise(vec2 v)\n  {\n  const vec4 C = vec4(0.211324865405187,  // (3.0-sqrt(3.0))/6.0\n                      0.366025403784439,  // 0.5*(sqrt(3.0)-1.0)\n                     -0.577350269189626,  // -1.0 + 2.0 * C.x\n                      0.024390243902439); // 1.0 / 41.0\n// First corner\n  vec2 i  = floor(v + dot(v, C.yy) );\n  vec2 x0 = v -   i + dot(i, C.xx);\n\n// Other corners\n  vec2 i1;\n  //i1.x = step( x0.y, x0.x ); // x0.x > x0.y ? 1.0 : 0.0\n  //i1.y = 1.0 - i1.x;\n  i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);\n  // x0 = x0 - 0.0 + 0.0 * C.xx ;\n  // x1 = x0 - i1 + 1.0 * C.xx ;\n  // x2 = x0 - 1.0 + 2.0 * C.xx ;\n  vec4 x12 = x0.xyxy + C.xxzz;\n  x12.xy -= i1;\n\n// Permutations\n  i = mod289(i); // Avoid truncation effects in permutation\n  vec3 p = permute( permute( i.y + vec3(0.0, i1.y, 1.0 ))\n\t\t+ i.x + vec3(0.0, i1.x, 1.0 ));\n\n  vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy), dot(x12.zw,x12.zw)), 0.0);\n  m = m*m ;\n  m = m*m ;\n\n// Gradients: 41 points uniformly over a line, mapped onto a diamond.\n// The ring size 17*17 = 289 is close to a multiple of 41 (41*7 = 287)\n\n  vec3 x = 2.0 * fract(p * C.www) - 1.0;\n  vec3 h = abs(x) - 0.5;\n  vec3 ox = floor(x + 0.5);\n  vec3 a0 = x - ox;\n\n// Normalise gradients implicitly by scaling m\n// Approximation of: m *= inversesqrt( a0*a0 + h*h );\n  m *= 1.79284291400159 - 0.85373472095314 * ( a0*a0 + h*h );\n\n// Compute final noise value at P\n  vec3 g;\n  g.x  = a0.x  * x0.x  + h.x  * x0.y;\n  g.yz = a0.yz * x12.xz + h.yz * x12.yw;\n  return 130.0 * dot(m, g);\n}\n\nfloat rand(vec2 co)\n{\n   return fract(sin(dot(co.xy,vec2(12.9898,78.233))) * 43758.5453);\n}\n\n\nvoid mainImage( out vec4 fragColor, in vec2 fragCoord )\n{\n\tvec2 uv = fragCoord.xy / iResolution.xy;    \n    float time = iTime * 2.0;\n    \n    // Create large, incidental noise waves\n    float noise = max(0.0, snoise(vec2(time, uv.y * 0.3)) - 0.3) * (1.0 / 0.7);\n    \n    // Offset by smaller, constant noise waves\n    noise = noise + (snoise(vec2(time*10.0, uv.y * 2.4)) - 0.5) * 0.15;\n    \n    // Apply the noise as x displacement for every line\n    float xpos = uv.x - noise * noise * 0.25;\n\tfragColor = texture(iChannel0, vec2(xpos, uv.y));\n    \n    // Mix in some random interference for lines\n    fragColor.rgb = mix(fragColor.rgb, vec3(rand(vec2(uv.y * time))), noise * 0.3).rgb;\n    \n    // Apply a line pattern every 4 pixels\n    if (floor(mod(fragCoord.y * 0.25, 2.0)) == 0.0)\n    {\n        fragColor.rgb *= 1.0 - (0.15 * noise);\n    }\n    \n}",
+          "hidePreview": false
+        },
+        "inputValues": {
+          "initialCode": ""
+        }
+      },
+      {
+        "id": "image_processor_ggqncr",
+        "nodeSpecId": "image_processor",
+        "customData": {
+          "initialWidth": 480,
+          "initialHeight": 384,
+          "previewX": 608,
+          "previewY": 912,
+          "previewWidth": 480,
+          "previewHeight": 384
+        },
+        "uiData": {
+          "posX": 235.60531941523442,
+          "posY": 463.75034379697047,
+          "width": 176,
+          "height": 253,
+          "selected": false
+        },
+        "propValues": {
+          "hidePreview": false,
+          "resize": {
+            "width": -1,
+            "height": -1
+          },
+          "resize,,,width": -1,
+          "resize,,,height": -1
+        },
+        "incomingEdges": {
+          "image": [
+            {
+              "sourceNodeId": "live_camera_ehkln7",
+              "outputId": "image"
+            }
+          ]
+        }
+      },
+      {
+        "id": "live_camera_2eylc9",
+        "nodeSpecId": "live_camera",
+        "customData": {
+          "runContinuously": true,
+          "initialWidth": 240,
+          "initialHeight": 320,
+          "previewX": 16,
+          "previewY": 1120,
+          "previewWidth": 240,
+          "previewHeight": 320
+        },
+        "uiData": {
+          "posX": -80,
+          "posY": 112,
+          "width": 176,
+          "height": 105,
+          "selected": false
+        },
+        "propValues": {
+          "hidePreview": false
+        }
+      },
+      {
+        "id": "body_segmentation_ndynsu",
+        "nodeSpecId": "body_segmentation",
+        "customData": {
+          "previewX": 880,
+          "previewY": 16,
+          "previewWidth": 320,
+          "previewHeight": 240
+        },
+        "uiData": {
+          "posX": 224,
+          "posY": 96,
+          "width": 185.29345703125,
+          "height": 105,
+          "selected": false
+        },
+        "propValues": {
+          "modelOption": "BodyPix"
+        },
+        "incomingEdges": {
+          "image": [
+            {
+              "sourceNodeId": "live_camera_2eylc9",
+              "outputId": "image"
+            }
+          ]
+        }
+      },
+      {
+        "id": "mask_visualizer_1ttito",
+        "nodeSpecId": "mask_visualizer",
+        "customData": {
+          "previewX": 880,
+          "previewY": 16,
+          "previewWidth": 320,
+          "previewHeight": 240
+        },
+        "uiData": {
+          "posX": 560,
+          "posY": -32,
+          "width": 176,
+          "height": 179,
+          "selected": false
+        },
+        "propValues": {
+          "mode": "fg-image",
+          "hidePreview": false
+        },
+        "inputValues": {
+          "color": "#22e8dd"
+        },
+        "incomingEdges": {
+          "image": [
+            {
+              "sourceNodeId": "live_camera_2eylc9",
+              "outputId": "image"
+            }
+          ],
+          "segmentationResult": [
+            {
+              "sourceNodeId": "body_segmentation_ndynsu",
+              "outputId": "segmentationResult"
+            }
+          ]
+        }
+      },
+      {
+        "id": "image_comparison_3d3uaj",
+        "nodeSpecId": "image_comparison",
+        "customData": {
+          "initialWidth": 448,
+          "initialHeight": 336,
+          "previewX": 272,
+          "previewY": 1312,
+          "previewWidth": 448,
+          "previewHeight": 336
+        },
+        "uiData": {
+          "posX": 800,
+          "posY": -96,
+          "width": 180.93896484375,
+          "height": 130,
+          "selected": false
+        },
+        "propValues": {
+          "columnLabels": "",
+          "hidePreview": false
+        },
+        "inputValues": {
+          "images": []
+        },
+        "incomingEdges": {
+          "images": [
+            {
+              "sourceNodeId": "mask_visualizer_1ttito",
+              "outputId": "maskedImage"
+            },
+            {
+              "sourceNodeId": "mask_visualizer_mtivc2",
+              "outputId": "maskedImage"
+            }
+          ]
+        }
+      },
+      {
+        "id": "image_mixer_32j68d",
+        "nodeSpecId": "image_mixer",
+        "customData": {
+          "previewX": 480,
+          "previewY": 272,
+          "previewWidth": 400,
+          "previewHeight": 320
+        },
+        "uiData": {
+          "posX": 1488,
+          "posY": 336,
+          "width": 224,
+          "height": 254,
+          "selected": false
+        },
+        "propValues": {
+          "mode": "destination-over",
+          "hidePreview": false
+        },
+        "inputValues": {
+          "topText": "",
+          "midText": "",
+          "bottomText": ""
+        },
+        "incomingEdges": {
+          "image1": [
+            {
+              "sourceNodeId": "virtual_sticker_w943hr",
+              "outputId": "image"
+            }
+          ],
+          "image2": [
+            {
+              "sourceNodeId": "shader_processing_i6cqgj",
+              "outputId": "image"
+            }
+          ]
+        }
+      },
+      {
+        "id": "virtual_sticker_w943hr",
+        "nodeSpecId": "virtual_sticker",
+        "customData": {
+          "previewX": 16,
+          "previewY": 528,
+          "previewWidth": 320,
+          "previewHeight": 240
+        },
+        "uiData": {
+          "posX": 1120,
+          "posY": 320,
+          "width": 176,
+          "height": 255,
+          "selected": false
+        },
+        "propValues": {
+          "anchor": "faceTop",
+          "scale": 1,
+          "offsetX": -200,
+          "offsetY": -200,
+          "hidePreview": false
+        },
+        "incomingEdges": {
+          "landmarkResult": [
+            {
+              "sourceNodeId": "face_landmark_2s9qho",
+              "outputId": "landmarkResult"
+            }
+          ],
+          "stickerImage": [
+            {
+              "sourceNodeId": "input_image_w425gv",
+              "outputId": "image"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "customNodeUrls": [
+    "https://storage.googleapis.com/tfweb/visualblocks-github-bundles/@visualblocks/gemini@latest/dist/bundle.js"
+  ]
+}
